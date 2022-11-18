@@ -9,7 +9,8 @@ import numpy as np
 import os
 import json
 
-def vis_based_json(img :cv2.Mat , boxes: list, cls_ids: dict, labels: list) -> cv2.Mat : #预测的id ，预测的类别字典
+#预测的id ，预测的类别字典 画框不限类别
+def vis_based_json(img :cv2.Mat , boxes: list, cls_ids: dict, labels: list) -> cv2.Mat : 
     # shape_list = []
     for i in range(len(boxes)):
         box = boxes[i]
@@ -27,17 +28,17 @@ def vis_based_json(img :cv2.Mat , boxes: list, cls_ids: dict, labels: list) -> c
         font = cv2.FONT_HERSHEY_SIMPLEX
 
         txt_size = cv2.getTextSize(text, font, 0.4, 1)[0]
-        cv2.rectangle(img, (x0, y0), (x1, y1), color, 2)
-
-        txt_bk_color = (_COLORS[cls_id] * 255 * 0.7).astype(np.uint8).tolist()
-        cv2.rectangle(
-            img,
-            (x0, y0 + 1),
-            (x0 + txt_size[0] + 1, y0 + int(1.5*txt_size[1])),
-            txt_bk_color,
-            -1
-        )
-        cv2.putText(img, text, (x0, y0 + txt_size[1]), font, 0.4, txt_color, thickness=1)
+        cv2.rectangle(img, (x0, y0), (x1, y1), color, 1)
+        # 是否背景+文字
+        # txt_bk_color = (_COLORS[cls_id] * 255 * 0.7).astype(np.uint8).tolist()
+        # # cv2.rectangle(
+        # #     img,
+        # #     (x0, y0 + 1),
+        # #     (x0 + txt_size[0] + 1, y0 + int(1.5*txt_size[1])),
+        # #     txt_bk_color,
+        # #     -1
+        # # )
+        # cv2.putText(img, text, (x0, y0 + txt_size[1]), font, 0.4, txt_color, thickness=1)
     return img
 
 def ensure_dir(folder):
@@ -155,13 +156,17 @@ _COLORS = np.array(
 if __name__ == '__main__':
     # import cv2
     curdir = r'D:\sa_data\exps\2022.10.8_htx_dbnet\Element_grabbing\grabbing_evaluation' #图片目录
-    label_dir = r'D:\sa_data\exps\20221026_yolox-nano_conf_0.2\Element_grabbing\grabbing_evaluation' #保存结果的目录
+    # curdir = r'D:\sa_data\exps\soft_nms\20221117_numpy_softnms_conf15_nms45\Element_grabbing\grabbing_evaluation'
+    # label_dir = curdir
+    label_dir = r'D:\sa_data\exps\class_aware\20221116_aware_conf015_nms_0.45\Element_grabbing\grabbing_evaluation' #保存结果的目录
     imgs_link = r'imgs'
-    predic_link = r'yolox_predict'
-
+    # predic_link = r'yolox_predict'
+    predic_link = r'grabbing_predict'
     #-----1.以上是路径
     app_names = os.listdir(curdir) 
     app_names = [x for x in app_names if x < "0028"]
+    # app_names = [x for x in app_names if x < "0028" and x >'0026']
+    print(app_names)
     class_names = ['text','icon','image']  #
 
     cls_ids ={} # text：0
