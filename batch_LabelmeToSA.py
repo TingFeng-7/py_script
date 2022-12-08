@@ -90,7 +90,7 @@ def batchTransform(sourcePath):
         if os.path.isdir(filePath): # 是目录
             # logger.info(item)
             if item in dirNames:   # 是我们想要的目录
-            ####################
+                ####################
                 for path in os.listdir(filePath): #每个json文件开改
                     sa_json = parse_labelme_json(os.path.join(filePath, path))
 
@@ -100,7 +100,7 @@ def batchTransform(sourcePath):
                     with open(json_name,'w', encoding='utf-8') as fw: 
                         json.dump(sa_json,fw, indent=2)
                         logger.info('{} saved'.format(json_name)) 
-            ########################
+                ########################
                 #仿照目录递归生成
                 logger.info('转换成功: ' + filePath)
             else:

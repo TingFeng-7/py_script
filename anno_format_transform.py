@@ -6,12 +6,6 @@ import argparse
 import cv2
 import tqdm
 import base64
-from cv_data_tool.common.py_util.util import *
-from ocr.OCR import PaddleOCR_CRNNOCR
-from cv_data_tool.data_tool.template_match_pre import task as template_match_pre
-from cv_data_tool.data_tool.template_match_post import task as template_match_post
-from cv_data_tool.common.cv.util import get_iou, ensure_parent
-from cv_data_tool.common.py_util.dataset_std_util import write_anno
 import onnxruntime
 import shutil
 
